@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from tqdm import tqdm
 
 # Load JSON exhibitor IDs
-with open('hits.json', 'r', encoding='utf-8') as f:
+with open('lits.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 exhibitors = data['DATA']['results']['exhibitor']['hit']
@@ -20,25 +20,6 @@ options.add_argument('--disable-gpu')
 options.add_argument('--window-size=1920x1080')
 
 driver = webdriver.Chrome(options=options)
-
-
-# def get_exhibitor_data(exhid):
-#     url = f"https://sff2025.mapyourshow.com/8_0/exhibitor/exhibitor-details.cfm?exhid={exhid}"
-#     driver.get(url)
-#     time.sleep(3)
-
-#     def safe_find(selector):
-#         try:
-#             return driver.find_element(By.CSS_SELECTOR, selector).text.strip()
-#         except:
-#             return ""
-
-#     return {
-#         'name': safe_find("h1"),
-#         'address': safe_find(".contact-info"),  # <--- likely class for address
-#         "contact": safe_find(".address.column.address p"),  # Adjust based on actual HTML structure
-#     }
-
 
 def get_exhibitor_data(exhid):
     url = f"https://sff2025.mapyourshow.com/8_0/exhibitor/exhibitor-details.cfm?exhid={exhid}"
@@ -78,7 +59,7 @@ def get_exhibitor_data(exhid):
 
 # Scrape all
 results = []
-for exhid in tqdm(exhids[:5]):  # Use [:10] to test first; remove slice for full run
+for exhid in tqdm(exhids):  # Use [:10] to test first; remove slice for full run
     data = get_exhibitor_data(exhid)
     results.append(data)
 
